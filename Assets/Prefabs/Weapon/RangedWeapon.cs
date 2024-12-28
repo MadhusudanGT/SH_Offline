@@ -16,16 +16,4 @@ public class RangedWeapon : Weapon
         bulletVfx.Emit(bulletVfx.emission.GetBurst(0).maxCount);
         PlayWeaponAudio();
     }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

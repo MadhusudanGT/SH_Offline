@@ -19,11 +19,6 @@ public class AimComponent : MonoBehaviour
         return null; 
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawLine(muzzle.position, muzzle.position + GetAimDir() * aimRange);
-    }
-
     Vector3 GetAimDir()
     {
         Vector3 muzzleDir = muzzle.forward;

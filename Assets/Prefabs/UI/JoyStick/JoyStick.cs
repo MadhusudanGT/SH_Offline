@@ -1,4 +1,4 @@
- using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -16,17 +16,23 @@ public class JoyStick : MonoBehaviour, IDragHandler, IPointerDownHandler, IPoint
     public event OnStickTaped onStickTaped;
 
     bool bWasDragging;
+
+    [SerializeField] private float smoothSpeed = 10f;
+
+    private Vector2 currentThumbPosition;
+    private Vector2 targetThumbPosition;
+
     public void OnDrag(PointerEventData eventData)
     {
-        //Debug.Log($"On Drag Fired {eventData.position}");
-        Vector2 TouchPos = eventData.position;
+        Vector2 touchPos = eventData.position;
         Vector2 centerPos = BackgroundTrans.position;
 
-        Vector2 localOffset = Vector2.ClampMagnitude(TouchPos - centerPos, BackgroundTrans.sizeDelta.x/2);
-        
+        Vector2 localOffset = Vector2.ClampMagnitude(touchPos - centerPos, BackgroundTrans.sizeDelta.x / 2);
+
         Vector2 inputVal = localOffset / (BackgroundTrans.sizeDelta.x / 2);
 
-        ThumbStickTrans.position = centerPos + localOffset;
+        targetThumbPosition = centerPos + localOffset;
+
         onStickValueUpdated?.Invoke(inputVal);
         bWasDragging = true;
     }
@@ -35,6 +41,8 @@ public class JoyStick : MonoBehaviour, IDragHandler, IPointerDownHandler, IPoint
     {
         BackgroundTrans.position = eventData.position;
         ThumbStickTrans.position = eventData.position;
+        currentThumbPosition = eventData.position;
+        targetThumbPosition = eventData.position;
         bWasDragging = false;
     }
 
@@ -42,22 +50,20 @@ public class JoyStick : MonoBehaviour, IDragHandler, IPointerDownHandler, IPoint
     {
         BackgroundTrans.position = CenterTrans.position;
         ThumbStickTrans.position = BackgroundTrans.position;
+        targetThumbPosition = BackgroundTrans.position;
+        currentThumbPosition = BackgroundTrans.position;
+
         onStickValueUpdated?.Invoke(Vector2.zero);
-        if(!bWasDragging)
+
+        if (!bWasDragging)
         {
             onStickTaped?.Invoke();
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void Update()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        currentThumbPosition = Vector2.Lerp(currentThumbPosition, targetThumbPosition, Time.deltaTime * smoothSpeed);
+        ThumbStickTrans.position = currentThumbPosition;
     }
 }

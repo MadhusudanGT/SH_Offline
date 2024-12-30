@@ -38,7 +38,7 @@ public class Player : MonoBehaviour, ITeamInterface
     Vector2 aimInput;
 
     Camera mainCam;
-    CameraController cameraController;
+
     Animator animator;
 
     float animatorTurnSpeed;
@@ -55,7 +55,6 @@ public class Player : MonoBehaviour, ITeamInterface
         aimStick.onStickValueUpdated += aimStickUpdated;
         aimStick.onStickTaped += StartSwichWeapon;
         mainCam = Camera.main;
-        cameraController = FindObjectOfType<CameraController>();
         animator = GetComponent<Animator>();
         healthComponent.onHealthChange += HealthChanged;
         healthComponent.onHealthEmpty += StartDeathSequence;
@@ -135,7 +134,6 @@ public class Player : MonoBehaviour, ITeamInterface
     void Update()
     {
         PerformMoveAndAim();
-        UpdateCamera();
     }
 
     private void PerformMoveAndAim()
@@ -163,15 +161,6 @@ public class Player : MonoBehaviour, ITeamInterface
             AimDir = StickInputToWorldDir(aimInput);
         }
         RotateTowards(AimDir);
-    }
-
-    private void UpdateCamera()
-    {
-        //player is move but not aiming, and cameraController exists
-        if (moveInput.magnitude != 0 && aimInput.magnitude == 0 && cameraController != null)
-        {
-            cameraController.AddYawInput(moveInput.x);
-        }
     }
 
     private void RotateTowards(Vector3 AimDir)

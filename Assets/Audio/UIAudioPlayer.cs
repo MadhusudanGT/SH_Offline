@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Auido/UIAudioPlayer")]
@@ -10,7 +7,7 @@ public class UIAudioPlayer : ScriptableObject
     [SerializeField] AudioClip CommitAudioClip;
     [SerializeField] AudioClip SelectAudioClip;
     [SerializeField] AudioClip WinAudioClip;
-
+    [SerializeField] AudioSource _audioSource;
     public void PlayClick()
     {
         PlayAudio(ClickAudioClip);
@@ -33,9 +30,6 @@ public class UIAudioPlayer : ScriptableObject
 
     void PlayAudio(AudioClip audioToPlay)
     {
-        if(Camera.main != null)
-        {
-            Camera.main.GetComponent<AudioSource>().PlayOneShot(audioToPlay);
-        }
+        if (_audioSource != null) { _audioSource.PlayOneShot(audioToPlay); }
     }
 }

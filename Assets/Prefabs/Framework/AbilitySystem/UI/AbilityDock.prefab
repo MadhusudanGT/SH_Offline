@@ -32,7 +32,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6893720287124454757}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
@@ -135,7 +134,6 @@ RectTransform:
   m_Children:
   - {fileID: 9040762140127051630}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
@@ -168,3 +166,5 @@ MonoBehaviour:
   AbilityUIPrefab: {fileID: -5694949144044780329, guid: 4c80e8a91a4b45844b57c04df9503d52,
     type: 3}
   ScaleRange: 100
+  highlightSize: 1.5
+  ScaleSpeed: 20

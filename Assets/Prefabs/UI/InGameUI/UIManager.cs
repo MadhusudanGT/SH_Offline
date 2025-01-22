@@ -63,9 +63,12 @@ public class UIManager : MonoBehaviour
 
     private void SetGroupActive(CanvasGroup child, bool interactable, bool visible)
     {
-        child.interactable = interactable;
-        child.blocksRaycasts = interactable;
-        child.alpha = visible ? 1 : 0;
+        if (child)
+        {
+            child.interactable = interactable;
+            child.blocksRaycasts = interactable;
+            child.alpha = visible ? 1 : 0;
+        }
     }
 
     public void SetGameplayControlEnabled(bool enabled)
